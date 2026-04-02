@@ -28,6 +28,12 @@ final List<Expense> _registeredExpenses = [
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expense Tracker'),
+        actions: [
+          IconButton(icon: const Icon(Icons.add), onPressed:(){},)
+        ],
+      ),
       body: Column(
         children: [
           Text('Chart Goes Here'),
