@@ -40,7 +40,7 @@ void main() {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: kdarkColorScheme.primaryContainer,
-          foregroundColor: kdarkColorScheme.onPrimaryContainer,
+          foregroundColor: kdarkColorScheme.onPrimaryContainer
         )
       )
       

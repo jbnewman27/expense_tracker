@@ -59,6 +59,9 @@ final List<Expense> _registeredExpenses = [
 
   @override
 Widget build(BuildContext context) {
+  var width = MediaQuery.of(context).size.width;
+
+
     Widget mainContent = const Center(
       child: Text('No Expenses found. Click + to add one!'),
     );
@@ -78,7 +81,7 @@ Widget build(BuildContext context) {
           )
         ],
       ),
-      body: Column(
+      body: width < 600 ? Column(
         children: [
           const Text("Chart"),
           Chart(expenses: _registeredExpenses),
@@ -86,7 +89,16 @@ Widget build(BuildContext context) {
             child: mainContent,
           )
         ],
-      ),
+      ):
+      Row(
+        children: [
+          const Text("Chart"),
+          Expanded(child: Chart(expenses: _registeredExpenses)),
+          Expanded(
+            child: mainContent,
+          )
+        ],
+      ) ,
     );
   }
 }
