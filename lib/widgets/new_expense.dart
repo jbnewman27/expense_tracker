@@ -24,7 +24,7 @@ class _NewExpenseState extends State<NewExpense>{
   void _submitExpenseData(){
 
       final enteredAmount = double.tryParse(_amountController.text);
-      final amountIsInvalid = enteredAmount==null || enteredAmount <= 0;
+      final amountIsInvalid = enteredAmount==nul| enteredAmount <= 0;
       
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
@@ -58,6 +58,7 @@ class _NewExpenseState extends State<NewExpense>{
         category: _selectedCategory
       ),
     );
+    Navigator.pop(context);
   }
 
   void _presentDatePicker() async{
@@ -80,8 +81,9 @@ class _NewExpenseState extends State<NewExpense>{
 
   @override
   Widget build(BuildContext context){
+    var width = MediaQuery.of(context).size.width;
     return Padding(padding: const EdgeInsets.fromLTRB(16,48,16,16),
-    child: Column(
+    child: width < 600 ? Column(
       children: [
         TextField(
           controller: _titleController,
@@ -139,6 +141,53 @@ class _NewExpenseState extends State<NewExpense>{
           ElevatedButton(onPressed: _submitExpenseData, child: Text("Save Expense"))
         ])
 
+      ]
+    ): Row(
+      children: [
+        Expanded(child: TextField(
+          controller: _titleController,
+          maxLength: 50,
+          keyboardType:TextInputType.name,
+          decoration: const InputDecoration(
+            label: Text('Title')),
+          ), ),
+      const SizedBox(width: 16,),
+      Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  maxLength: 50,
+                  keyboardType:TextInputType.number,
+                  decoration: InputDecoration(
+                  prefixText: '\$',
+                  label: Text('Amount'),
+                ),
+                ),
+              ),
+        Row(children: [
+            DropdownButton(
+                value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category.name.toUpperCase()),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value == null){
+                    return;
+                  }
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                },
+              ),
+           ElevatedButton(onPressed: (){
+           Navigator.pop(context);
+            }, child: Text("Cancel")),
+          ElevatedButton(onPressed: _submitExpenseData, child: Text("Save Expense"))
+        ])       
       ]
     ));
   }
